@@ -6,7 +6,8 @@ import { v4 as uuidv4 } from "uuid";
 
 export interface NewTodo {
   description: string,
-  date?: string
+  date?: string,
+  complete: boolean
 }
 
 export const createTodo = (todoParams: NewTodo): Promise<AxiosResponse<Todo>> => {
@@ -22,7 +23,6 @@ export const createTodo = (todoParams: NewTodo): Promise<AxiosResponse<Todo>> =>
 
 export const replaceTodo = (id: string, todoUpdates: NewTodo): Promise<AxiosResponse<Todo>> => {
   const existingTodo = todosMap.get(id);
-
   if (!existingTodo) {
     mockApi.onPut(endpoint + '/' + id, todoUpdates).reply(404, { message: "TodoNotFound" });
   } else {
